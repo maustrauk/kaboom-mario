@@ -25,7 +25,7 @@ loadSprite('pipe-bottom-left', 'pipe-bottom-left.png')
 loadSprite('pipe-bottom-right', 'pipe-bottom-right.png')
 
 scene("game", () => {
-    layers(['bg', 'obj', 'ui'], 'obj')
+    layers(['bg', 'obj', 'ui'], 'obj');
 
     const map = [
         '                                      ',
@@ -38,7 +38,7 @@ scene("game", () => {
         '                            -+        ',
         '                    ^   ^   ()        ',
         '==============================   =====',
-          ]        
+          ];        
 
     const levelCfg = {
         width: 20,
@@ -54,9 +54,9 @@ scene("game", () => {
         '+': [sprite('pipe-top-right'), solid(), scale(0.5)],
         '^': [sprite('evil-shroom'), solid()],
         '#': [sprite('mushroom'), solid()],
-    }
+    };
 
-    const gameLevel = addLevel(map, levelCfg)
+    const gameLevel = addLevel(map, levelCfg);
 
     const scoreLable = add([
         text('test'),
@@ -65,9 +65,9 @@ scene("game", () => {
         {
             value: 'test',
         }
-    ])
+    ]);
 
-    add([text('level ' + 'test', pos(4,6))])
+    add([text('level ' + 'test', pos(4,6))]);
 
     function big() {
         let timer =0;
@@ -78,7 +78,7 @@ scene("game", () => {
                 if (isBig) {
                     timer -= dt();
                     if (timer <= 0) {
-                        this.smallify()
+                        this.smallify();
                     }
                 }
             },
@@ -104,21 +104,35 @@ scene("game", () => {
         body(),
         big(),
         origin('bot')
-    ])
+    ]);
+
+    player.on("headbump", (obj) => {
+        if (obj.is('coin-suprise')) {
+            gameLevel.spawn('$', obj.gridPos.sub(0,1));
+            destroy(obj);
+            gameLevel.spawn('}', obj.gridPos.sub(0,0));
+        }
+
+        if (obj.is('mushroom-suprise')) {
+            gameLevel.spawn('#', obj.gridPos.sub(0,1));
+            destroy(obj);
+            gameLevel.spawn('}', obj.gridPos.sub(0,0));
+        }
+    });
 
     keyDown('left', () => {
-        player.move(-MOVE_SPEED_X, 0)
-    })
+        player.move(-MOVE_SPEED_X, 0);
+    });
 
     keyDown('right', () => {
-        player.move(MOVE_SPEED_X, 0)
+        player.move(MOVE_SPEED_X, 0);
     })
 
     keyPress('space', () => {
         if(player.grounded()) {
-            player.jump(JUMP_FORSE)
+            player.jump(JUMP_FORSE);
         }
-    })
+    });
 })
 
 start("game")
