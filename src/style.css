@@ -50,8 +50,6 @@ table {
 }
 
 /*End of Reset*/
-
-body {
-	margin: 0;
-	overflow: hidden;
-  }
+canvas {
+	width: 60%;
+}
