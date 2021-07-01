@@ -6,37 +6,39 @@ kaboom({
     clearColor: [0, 0, 0, 1],
 })
 
-loadRoot('https://i.imgur.com/')
-loadSprite('coin', 'wbKxhcd.png')
-loadSprite('evil-shroom', 'KPO3fR9.png')
-loadSprite('brick', 'pogC9x5.png')
-loadSprite('block', 'M6rwarW.png')
-loadSprite('mario', 'Wb1qfhK.png')
-loadSprite('mushroom', '0wMd92p.png')
-loadSprite('surprise', 'gesQ1KP.png')
-loadSprite('unboxed', 'bdrLpi6.png')
-loadSprite('pipe-top-left', 'ReTPiWY.png')
-loadSprite('pipe-top-right', 'hj2GK4n.png')
-loadSprite('pipe-bottom-left', 'c1cYSbt.png')
-loadSprite('pipe-bottom-right', 'nqQ79eI.png')
+loadRoot('/assets/')
+loadSprite('coin', 'coin.png')
+loadSprite('evil-shroom', 'evil-shroom.png')
+loadSprite('brick', 'brick.png')
+loadSprite('block', 'block.png')
+loadSprite('mario', 'mario.png')
+loadSprite('mushroom', 'mushroom.png')
+loadSprite('surprise', 'surprise.png')
+loadSprite('unboxed', 'unboxed.png')
+loadSprite('pipe-top-left', 'pipe-top-left.png')
+loadSprite('pipe-top-right', 'pipe-top-right.png')
+loadSprite('pipe-bottom-left', 'pipe-bottom-left.png')
+loadSprite('pipe-bottom-right', 'pipe-bottom-right.png')
 
-screen("game", () => {
+scene("game", () => {
     layers(['bg', 'obj', 'ui'], 'obj')
 
-    const maps = [
-        [
+    const map = [
             '                                      ',
             '                                      ',
             '                                      ',
             '                                      ',
             '                                      ',
-            '     %   =*=%=                        ',
-            '                                      ',
-            '                            -+        ',
-            '                    ^   ^   ()        ',
             '==============================   =====',
-          ],        
-    ]
+          ]        
+
+    const levelCfg = {
+        width: 20,
+        height: 20,
+        '=': [sprite('block'), solid()],
+    }
+
+    const gameLevel = addLevel(map, levelCfg)
 })
 
 start("game")
