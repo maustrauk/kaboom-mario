@@ -50,6 +50,14 @@ table {
 }
 
 /*End of Reset*/
+
+body {
+	background-color: red;
+	background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
+}
+
 canvas {
+	margin-top: 2%;
+	margin-left: 20%;
 	width: 60%;
 }
