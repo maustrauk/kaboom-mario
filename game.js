@@ -23,7 +23,20 @@ loadSprite('pipe-bottom-right', 'nqQ79eI.png')
 screen("game", () => {
     layers(['bg', 'obj', 'ui'], 'obj')
 
-
+    const maps = [
+        [
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '     %   =*=%=                        ',
+            '                                      ',
+            '                            -+        ',
+            '                    ^   ^   ()        ',
+            '==============================   =====',
+          ],        
+    ]
 })
 
 start("game")
