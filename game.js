@@ -6,6 +6,10 @@ kaboom({
     clearColor: [0, 0, 0, 1],
 })
 
+const MOVE_SPEED_X = 120;
+const JUMP_FORSE = 360;
+
+
 loadRoot('/assets/')
 loadSprite('coin', 'coin.png')
 loadSprite('evil-shroom', 'evil-shroom.png')
@@ -71,6 +75,20 @@ scene("game", () => {
         body(),
         origin('bot')
     ])
+
+    keyDown('left', () => {
+        player.move(-MOVE_SPEED_X, 0)
+    })
+
+    keyDown('right', () => {
+        player.move(MOVE_SPEED_X, 0)
+    })
+
+    keyPress('space', () => {
+        if(player.grounded()) {
+            player.jump(JUMP_FORSE)
+        }
+    })
 })
 
 start("game")
