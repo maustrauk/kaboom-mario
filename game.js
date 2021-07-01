@@ -53,6 +53,13 @@ scene("game", () => {
     }
 
     const gameLevel = addLevel(map, levelCfg)
+
+    const player = add([
+        sprite('mario'), solid(),
+        pos(30, 0),
+        body(),
+        origin('bot')
+    ])
 })
 
 start("game")
