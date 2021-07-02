@@ -170,6 +170,7 @@ scene("game", ({ score }) => {
 
     keyPress('space', () => {
         if(player.grounded()) {
+            isJumping = true;
             player.jump(CURRENT_JUMP_FORCE);
         }
     });
