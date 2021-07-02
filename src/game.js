@@ -18,7 +18,7 @@ let CURRENT_MOVE_SPEED = MOVE_SPEED;
 let isJumping = true;
 
 
-scene("game", ({ score }) => {
+scene("game", ({ level, score }) => {
     layers(['bg', 'obj', 'ui'], 'obj');
 
     const map = [
@@ -44,9 +44,9 @@ scene("game", ({ score }) => {
         '}': [sprite('unboxed'), solid()],
         '(': [sprite('pipe-bottom-left'), solid(), scale(0.5)],
         ')': [sprite('pipe-bottom-right'), solid(), scale(0.5)],
-        '-': [sprite('pipe-top-left'), solid(), scale(0.5)],
-        '+': [sprite('pipe-top-right'), solid(), scale(0.5)],
-        '^': [sprite('evil-shroom'), solid(), 'dangerous'],
+        '-': [sprite('pipe-top-left'), solid(), scale(0.5), 'pipe'],
+        '+': [sprite('pipe-top-right'), solid(), scale(0.5), 'pipe'],
+        '^': [sprite('evil-shroom'), solid(), 'dangerous', body()],
         '#': [sprite('mushroom'), solid(), 'mushroom', body()],
     };
 
@@ -61,7 +61,7 @@ scene("game", ({ score }) => {
         }
     ]);
 
-    add([text('level ' + 'test', pos(4,6))]);
+    add([text('level ' + parseInt(level + 1) ), pos(40, 6)])
 
     function big() {
         let timer =0;
@@ -147,6 +147,15 @@ scene("game", ({ score }) => {
         }
     });
 
+    player.collides('pipe', () => {
+        keyPress('down', () => {
+            go('game', {
+                level: (level + 1),
+                score: scoreLable.value
+            });
+        });
+    })
+
     player.action(() => {
         camPos(player.pos)
         if (player.pos.y >= FALL_DEATH) {
@@ -180,4 +189,4 @@ scene('lose', ({score}) => {
     add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)])
 });
 
-start("game", { score: 0});
+start("game", { level: 0, score: 0});
