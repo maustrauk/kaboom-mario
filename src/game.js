@@ -21,26 +21,40 @@ let isJumping = true;
 scene("game", ({ level, score }) => {
     layers(['bg', 'obj', 'ui'], 'obj');
 
-    const map = [
-        '                                      ',
-        '                                      ',
-        '                                      ',
-        '                                      ',
-        '                                      ',
-        '     %   =*=%=                        ',
-        '                                      ',
-        '                            -+        ',
-        '                    ^   ^   ()        ',
-        '==============================   =====',
-          ];        
+    const maps = [
+        [
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '                                      ',
+            '     *   =%=%=                        ',
+            '                                      ',
+            '                            -+        ',
+            '                    ^   ^   ()        ',
+            '==============================   =====',
+              ],
+        [
+            '£                                       £',
+            '£                                       £',
+            '£                                       £',
+            '£                                       £',
+            '£                                       £',
+            '£        @_@@@@              x x        £',
+            '£                          x x x        £',
+            '£                        x x x x  x   -+£',
+            '£               z   z  x x x x x  x   ()£',
+            '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!',
+              ]
+    ];        
 
     const levelCfg = {
         width: 20,
         height: 20,
         '=': [sprite('block'), solid()],
         '$': [sprite('coin'), 'coin'],
-        '%': [sprite('surprise'), solid(), 'coin-suprise'],
-        '*': [sprite('surprise'), solid(), 'mushroom-suprise'],
+        '%': [sprite('surprise'), solid(), 'coin-surprise'],
+        '*': [sprite('surprise'), solid(), 'mushroom-surprise'],
         '}': [sprite('unboxed'), solid()],
         '(': [sprite('pipe-bottom-left'), solid(), scale(0.5)],
         ')': [sprite('pipe-bottom-right'), solid(), scale(0.5)],
@@ -48,9 +62,16 @@ scene("game", ({ level, score }) => {
         '+': [sprite('pipe-top-right'), solid(), scale(0.5), 'pipe'],
         '^': [sprite('evil-shroom'), solid(), 'dangerous', body()],
         '#': [sprite('mushroom'), solid(), 'mushroom', body()],
+        '!': [sprite('blue-block'), solid(), scale(0.5)],
+        '£': [sprite('blue-brick'), solid(), scale(0.5)],
+        'z': [sprite('blue-evil-shroom'), solid(), scale(0.5), 'dangerous'],
+        '@': [sprite('blue-surprise'), solid(), scale(0.5), 'coin-surprise'],
+        '_': [sprite('blue-surprise'), solid(), scale(0.5), 'mushroom-surprise'],
+        'x': [sprite('blue-steel'), solid(), scale(0.5)],
     };
 
-    const gameLevel = addLevel(map, levelCfg);
+
+    const gameLevel = addLevel(maps[level], levelCfg);
 
     const scoreLable = add([
         text(score),
@@ -115,13 +136,13 @@ scene("game", ({ level, score }) => {
     })
 
     player.on("headbump", (obj) => {
-        if (obj.is('coin-suprise')) {
+        if (obj.is('coin-surprise')) {
             gameLevel.spawn('$', obj.gridPos.sub(0,1));
             destroy(obj);
             gameLevel.spawn('}', obj.gridPos.sub(0,0));
         }
 
-        if (obj.is('mushroom-suprise')) {
+        if (obj.is('mushroom-surprise')) {
             gameLevel.spawn('#', obj.gridPos.sub(0,1));
             destroy(obj);
             gameLevel.spawn('}', obj.gridPos.sub(0,0));
@@ -150,7 +171,7 @@ scene("game", ({ level, score }) => {
     player.collides('pipe', () => {
         keyPress('down', () => {
             go('game', {
-                level: (level + 1),
+                level: (level + 1) % maps.length,
                 score: scoreLable.value
             });
         });
