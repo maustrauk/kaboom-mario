@@ -57,7 +57,5 @@ body {
 }
 
 canvas {
-	margin-top: 2%;
-	margin-left: 20%;
-	width: 60%;
+	width: 100%;
 }
